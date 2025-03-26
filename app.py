@@ -18,7 +18,7 @@ o si continuará con éxito. Para ello, ingresa los datos en los campos correspo
 """)
 
 # Imagen
-st.image("https://www.reporterosasociados.com.co/wp/wp-content/uploads/2023/06/Estudiante-universitaria-en-una-Aula-de-Clase.Foto-Ferran-Nadeu.jpg", use_column_width=True)
+st.image("https://www.reporterosasociados.com.co/wp/wp-content/uploads/2023/06/Estudiante-universitaria-en-una-Aula-de-Clase.Foto-Ferran-Nadeu.jpg", use_container_width=True)
 
 # Entradas del usuario
 age = st.slider("Age", min_value=15, max_value=30, value=20)
