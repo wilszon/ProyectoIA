@@ -53,7 +53,7 @@ data_scaled = scaler.transform(data)
 
 # Botón de predicción
 if st.button("Predecir Deserción"):
-    prediction = svc_model.predict(data_scaled)[0]
+    prediction = nb_model.predict(data_scaled)[0]
     
     if prediction:
         st.error("⚠️ **Si vas a abandonar tu carrera**", icon="🚨")
