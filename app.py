@@ -5,7 +5,7 @@ import joblib
 
 # Cargar modelos
 scaler = joblib.load("scaler.pkl")
-svc_model = joblib.load("svc_model.pkl")
+svc_model = joblib.load("nb_model.pkl")
 
 # Configuración de la aplicación
 st.title("Modelo predicción de deserción universitaria con IA")
