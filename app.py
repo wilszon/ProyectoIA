@@ -55,7 +55,7 @@ data = pd.DataFrame({
     "Study_Time": [study_time],
     "Number_of_Failures": [number_of_failures],
     "School_Support": [1 if school_support == "Yes" else 0],
-    "Family_Support": [1 if family_support == "Yes" else 0],
+    "Family_Support": [1 if family_support == "Yes" else 0],  
     "Internet_Access": [1 if internet_access == "Yes" else 0],
     "Free_Time": [free_time],
     "Weekend_Alcohol_Consumption": [weekend_alcohol],
@@ -73,10 +73,10 @@ prediction = svc_model.predict(scaled_data)[0]
 
 # Mostrar el resultado
 st.markdown("---")
-if prediction:
-    st.markdown("<h2 style='color: red; text-align: center;'>❌ Si vas a abandonar tu carrera ❌</h2>", unsafe_allow_html=True)
-else:
+if prediction == 1:
     st.markdown("<h2 style='color: blue; text-align: center;'>✅ Si vas a continuar con tu carrera ✅</h2>", unsafe_allow_html=True)
+else:
+    st.markdown("<h2 style='color: red; text-align: center;'>❌ Si vas a abandonar tu carrera ❌</h2>", unsafe_allow_html=True)
 
 # Footer
 st.markdown("<p style='text-align: center;'>&copy; Unab2025</p>", unsafe_allow_html=True)
