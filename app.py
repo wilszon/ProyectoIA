@@ -1,67 +1,52 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import joblib
 
-# Cargar modelos
+# Cargar los modelos
 scaler = joblib.load("scaler.pkl")
-nb_model = joblib.load("nb_model.pkl")
+svc_model = joblib.load("xgboost_model.pkl")
 
-
-# Configuración de la aplicación
-st.title("Modelo predicción de deserción universitaria con IA")
+# Título y subtítulo
+st.title("Modelo de Predicción de Deserción Universitaria")
 st.subheader("Realizado por Mateo Sandoval, Wilson Suarez, Cristian Cala")
 
 # Introducción
-st.write("""
-Esta aplicación permite predecir si un estudiante universitario tiene riesgo de abandonar su carrera
-o si continuará con éxito. Para ello, ingresa los datos en los campos correspondientes y presiona el botón de predicción.
-""")
+st.write("Esta aplicación utiliza IA para predecir si un estudiante continuará o abandonará su carrera universitaria, basándose en factores académicos y personales.")
 
 # Imagen
 st.image("https://www.reporterosasociados.com.co/wp/wp-content/uploads/2023/06/Estudiante-universitaria-en-una-Aula-de-Clase.Foto-Ferran-Nadeu.jpg", use_container_width=True)
 
-# Entradas del usuario
-age = st.slider("Age", min_value=15, max_value=30, value=20)
-address = st.selectbox("Address", ["U", "R"])
-family_size = st.selectbox("Family_Size", ["GT3", "LE3"])
-parental_status = st.selectbox("Parental_Status", ["A", "T"])
-study_time = st.slider("Study_Time", min_value=1, max_value=4, value=2)
-number_of_failures = st.slider("Number_of_Failures", min_value=0, max_value=3, value=0)
-school_support = st.selectbox("School_Support", ["yes", "no"])
-family_support = st.selectbox("Family_Support", ["yes", "no"])
-extra_paid_class = st.selectbox("Extra_Paid_Class", ["yes", "no"])
-extra_curricular = st.selectbox("Extra_Curricular_Activities", ["yes", "no"])
-attended_nursery = st.selectbox("Attended_Nursery", ["yes", "no"])
-wants_higher_education = st.selectbox("Wants_Higher_Education", ["yes", "no"])
-internet_access = st.selectbox("Internet_Access", ["yes", "no"])
-family_relationship = st.slider("Family_Relationship", min_value=1, max_value=5, value=3)
-number_of_absences = st.slider("Number_of_Absences", min_value=0, max_value=93, value=5)
-final_grade = st.slider("Final_Grade", min_value=0, max_value=5, value=3)
+# Entrada de datos desde el sidebar
+st.sidebar.header("Introduce los datos del estudiante")
 
-# Convertir las entradas a DataFrame
-data = pd.DataFrame([[age, address, family_size, parental_status, study_time, number_of_failures, 
-                      school_support, family_support, extra_paid_class, extra_curricular, attended_nursery, 
-                      wants_higher_education, internet_access, family_relationship, number_of_absences, final_grade]],
-                     columns=['Age', 'Address', 'Family_Size', 'Parental_Status', 'Study_Time',
-                              'Number_of_Failures', 'School_Support', 'Family_Support', 'Extra_Paid_Class',
-                              'Extra_Curricular_Activities', 'Attended_Nursery', 'Wants_Higher_Education',
-                              'Internet_Access', 'Family_Relationship', 'Number_of_Absences', 'Final_Grade'])
+# Inputs
+study_time = st.sidebar.selectbox("Tiempo de Estudio", [1, 2, 3, 4], format_func=lambda x: ["< 1 hora", "2 horas", "3 horas", "4+ horas"][x - 1])
+number_of_failures = st.sidebar.selectbox("Número de Inasistencias", list(range(0, 4)))
+wants_higher_education = st.sidebar.selectbox("¿Desea Educación Superior?", ["Sí", "No"])
+grade_1 = st.sidebar.slider("Nota 1", 0, 5, 3)
+grade_2 = st.sidebar.slider("Nota 2", 0, 5, 3)
 
-# Normalizar los datos
-data_scaled = scaler.transform(data)
+# Crear DataFrame
+data = pd.DataFrame({
+    "Study_Time": [study_time],
+    "Number_of_Failures": [number_of_failures],
+    "Wants_Higher_Education": [1 if wants_higher_education == "Sí" else 0],
+    "Grade_1": [grade_1],
+    "Grade_2": [grade_2]
+})
 
-# Botón de predicción
-if st.button("Predecir Deserción"):
-    prediction = svc_model.predict(data_scaled)[0]
-    
-    if prediction:
-        st.error("⚠️ **Si vas a abandonar tu carrera**", icon="🚨")
-    else:
-        st.success("✅ **Si vas a continuar con tu carrera**", icon="🎓")
+# Normalizar
+scaled_data = scaler.transform(data)
 
-# Línea separadora
+# Predicción
+prediction = svc_model.predict(scaled_data)[0]
+
+# Mostrar resultado
 st.markdown("---")
+if prediction:
+    st.markdown("<h2 style='color: red; text-align: center;'>❌ Si vas a abandonar tu carrera ❌</h2>", unsafe_allow_html=True)
+else:
+    st.markdown("<h2 style='color: blue; text-align: center;'>✅ Si vas a continuar con tu carrera ✅</h2>", unsafe_allow_html=True)
 
-# Copyright
+# Footer
 st.markdown("<p style='text-align: center;'>&copy; Unab2025</p>", unsafe_allow_html=True)
