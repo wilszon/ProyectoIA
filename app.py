@@ -73,7 +73,7 @@ prediction = svc_model.predict(scaled_data)[0]
 
 # Mostrar el resultado
 st.markdown("---")
-if prediction == 1:
+if prediction == 0:
     st.markdown("<h2 style='color: blue; text-align: center;'>✅ Si vas a continuar con tu carrera ✅</h2>", unsafe_allow_html=True)
 else:
     st.markdown("<h2 style='color: red; text-align: center;'>❌ Si vas a abandonar tu carrera ❌</h2>", unsafe_allow_html=True)
