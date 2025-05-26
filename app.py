@@ -20,7 +20,7 @@ st.image("https://www.reporterosasociados.com.co/wp/wp-content/uploads/2023/06/E
 st.sidebar.header("Introduce los datos del estudiante")
 
 # Inputs
-study_time = st.sidebar.selectbox("Tiempo de Estudio", [1, 2, 3, 4], format_func=lambda x: ["< 1 hora", "2 horas", "3 horas", "4+ horas"][x - 1])
+study_time = st.sidebar.selectbox("Tiempo de Estudio", [1, 2, 3, 4], format_func=lambda x: ["Menos de 1 hora", "2 horas", "3 horas", "Más de 4 horas"][x - 1])
 number_of_failures = st.sidebar.selectbox("Número de Inasistencias", list(range(0, 4)))
 wants_higher_education = st.sidebar.selectbox("¿Tiene interés en realizar estudios de posgrado (como maestría o especialización) en el futuro?", ["Sí", "No"])
 grade_1 = st.sidebar.slider("Nota del primer corte", 0, 5, 3)
