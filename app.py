@@ -31,8 +31,8 @@ data = pd.DataFrame({
     "Study_Time": [study_time],
     "Number_of_Failures": [number_of_failures],
     "Wants_Higher_Education": [1 if wants_higher_education == "Sí" else 0],
-    "Grade_1": [grade_1],
-    "Grade_2": [grade_2]
+    "Grade_1": [grade_1*4],
+    "Grade_2": [grade_2*4]
 })
 
 # Normalizar
