@@ -22,9 +22,9 @@ st.sidebar.header("Introduce los datos del estudiante")
 # Inputs
 study_time = st.sidebar.selectbox("Tiempo de Estudio", [1, 2, 3, 4], format_func=lambda x: ["< 1 hora", "2 horas", "3 horas", "4+ horas"][x - 1])
 number_of_failures = st.sidebar.selectbox("Número de Inasistencias", list(range(0, 4)))
-wants_higher_education = st.sidebar.selectbox("¿Desea Educación Superior?", ["Sí", "No"])
-grade_1 = st.sidebar.slider("Nota 1", 0, 5, 3)
-grade_2 = st.sidebar.slider("Nota 2", 0, 5, 3)
+wants_higher_education = st.sidebar.selectbox("¿Tiene interés en realizar estudios de posgrado (como maestría o especialización) en el futuro?", ["Sí", "No"])
+grade_1 = st.sidebar.slider("Nota del primer corte", 0, 5, 3)
+grade_2 = st.sidebar.slider("Nota del segundo corte", 0, 5, 3)
 
 # Crear DataFrame
 data = pd.DataFrame({
